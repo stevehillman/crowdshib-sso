@@ -1,0 +1,153 @@
+	body{
+		font-family: "Trebuchet MS", sans-serif;
+		margin: 0px;
+		padding: 5px;
+	}
+
+	.demoHeaders {
+		margin-top: 2em;
+	}
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+	select {
+		width: 200px;
+	}
+
+	#container {
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+
+	#content {
+		background-color: #E6F6FF;
+		padding: 5px;
+		flex: 99 0 auto;
+	}
+	.noul {
+		text-decoration: none;
+		color: black;
+	}
+
+	.choiceBoxContainer {
+		display: block;
+		width: 100%;
+	}
+
+	.choiceBoxContainerRow {
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: table-row;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+@media all and (min-width: 1000px) {
+	.choiceBoxContainerRow {
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: table-row;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	#container {
+		width: 989px;
+	}
+}
+
+
+	.choiceBox {
+		margin: 5px;
+		padding: 0.5em;
+		border: 1px;
+		border-style: solid;
+		border-radius: 5px;
+		width: 290px;
+		text-align: center;
+		background-color: white;
+		-moz-box-shadow: 3px 3px 3px #ccc;
+		-webkit-box-shadow: 3px 3px 3px #ccc;
+		box-shadow: 3px 3px 3px #ccc;
+	}
+
+
+	.inputBox {
+		margin: 1em;
+		padding: 0.5em;
+		border: 1px;
+		border-style: solid;
+		border-radius: 5px;
+		display: none;
+	}
+
+	.fieldArea {
+		display: table-row;
+		margin: 1em;
+	}
+
+	.fieldValueArea, .fieldLabelArea {
+		display: table-cell;
+		margin: 1em;
+	}
+
+	.optionalPassword {
+		display: none;
+	}
+
+	#forgot {
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		vertical-align: text-top;
+	}
+
+	#countdown {
+		font-size: 4em;
+	}
+
+	.formFooter {
+		text-align: center;
+		margin: 0.5em;
+	}
+
+	footer {
+		font-size:	0.9em;
+		text-align: center;
+	}
+
+	input.inputError {
+		background: #FFEFEF;
+	}

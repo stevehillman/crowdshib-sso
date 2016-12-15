@@ -1,0 +1,51 @@
+# Should the config be reloaded periodically if it has been modified?
+reload.config=true
+# Seconds between possible reloading of config
+reload.config.interval=1
+
+# LDAP server and port to authenticate against when users use the Claim Account Servlet
+# defaults to localhost and port 389
+#ldap.host=ldap.domain.com
+#ldap.port=389
+#
+# LDAP attribute to store and look for the shib eppn in. By default this is eduPersonPrincipalName
+# but that attribute is only available if using the eduPerson schema AND user objects have been
+# created as eduPerson objectClass
+# If you use a single-value attribute (one that can't appear more than once in a user entry) an
+# exception will be thrown if more than one Shibboleth identity tries to claim the same Crowd account
+ldap.shib.attribute=street
+
+# The ldap.base and ldap.user.attribute are combined to create the DN for new users. In addition, 
+# the user attribute defines where to look for the Crowd username
+ldap.base=ou=people,dc=domain,dc=com
+ldap.user.attribute=cn
+
+# User/pw to bind to LDAP as to search for Shib identities. This user must have read access to
+# the 'ldap.user.attribute' and 'ldap.shib.attribute' for all users, but nothing else is needed
+ldap.bind.user=cn=test,ou=people,dc=domain,dc=com
+ldap.bind.password=SuperSecurePassword
+
+
+# Default group. If defined, any new user that's created will be added to this group immediately
+default.group=confluence-users
+
+# Domain field to put in SSO cookie. Should encompass all subdomains that a Crowd cookie is valid
+# If left undefined, no domain will be set for the cookie, which means the browser will only send
+# it to the same server that issued it
+cookie.domain=
+
+# Crowd Directory where users will be created. Must match an existing LDAP-backed directory in Crowd
+directory=
+
+# the claimAccount velocity template file
+claimaccount.template.file=claimaccount.vm
+
+# String to look for in target URL to try to identify which Crowd app the user is logging into
+application.url.confluence=confluence.domain.com
+application.url.jira=jira.domain.com
+application.url.crowd=crowd.domain.com
+
+# Define the following parameters to send a message whenever a new user is added
+mail.host=smtp.domain.com
+mail.from=confluence@domain.com
+mail.to=webmaster@domain.com

@@ -1,0 +1,16 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.artifactId}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+    </plugin-info>
+
+    <servlet name="ssocookie" class="net.bc.crowd.sso.SSOCookieServlet" key="ssocookie">
+        <url-pattern>/ssocookie</url-pattern>
+    </servlet>
+
+    <servlet name="claimaccount" class="net.bc.crowd.sso.ClaimAccountServlet" key="claimaccount">
+        <url-pattern>/claimAccount</url-pattern>
+    </servlet>
+
+</atlassian-plugin>

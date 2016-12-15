@@ -1,0 +1,204 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Claim or Create BCNET Wiki Account</title>
+	<link href="/crowd/console/bcnet-sso/jquery-ui.css" rel="stylesheet">
+	<link href="/crowd/console/bcnet-sso/bcnet.css" rel="stylesheet">
+
+
+<script src="/crowd/console/bcnet-sso/external/jquery/jquery.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+<script src="/crowd/console/bcnet-sso/jquery-ui.js"></script>
+<script src="/crowd/console/bcnet-sso/bcnet.js"></script>
+
+
+<script>
+
+var skipCheck=false;
+function validatePwd() {
+	if (skipCheck == true)
+	{
+		return true;
+	}
+	var invalid = " "; // Invalid character is a space
+	var minLength = 6; // Minimum length
+	var pw1 = document.myForm.password.value;
+	var pw2 = document.myForm.password2.value;
+	// check for a value in both fields.
+	if (pw1 == '' || pw2 == '') {
+		alert('Please enter your password twice.');
+		return false;
+	}
+	// check for minimum length
+	if (document.myForm.password.value.length < minLength) {
+		alert('Your password must be at least ' + minLength + ' characters long. Try again.');
+		return false;
+	}
+	// check for spaces
+	if (document.myForm.password.value.indexOf(invalid) > -1) {
+		alert("Sorry, spaces are not allowed.");
+		return false;
+	}
+	else {
+		if (pw1 != pw2) {
+			alert ("You did not enter the same new password twice. Please re-enter your password.");
+			return false;
+		}
+		else {
+			return true;
+      		}
+   	}
+}
+//  End -->
+</script>
+
+</head>
+<body>
+
+<div id="container">
+
+<header class="ui-widget-header ui-corner-top">
+<em>Claim or create Wiki Account</em>
+</header>
+
+<!-- Errors, if any -->
+#if ($errors.size() > 0)
+<div style='padding: 2px; background: #fcc; border:5px solid #f00; font-weight:bold;'>
+	<ul>
+	#foreach( $error in $errors )
+    	    <li style="color: red">$error</li>
+	#end
+	</ul>
+</div>
+#end
+
+<div id="content">
+
+<div class="crowdForm"> 
+
+#if ($eppn)
+
+<h2>BCNET Shibboleth Account Setup for ${eppn}</h2>
+
+#if ($exists)
+## The user's account has been created or claimed. Print a success message and a redirect URL
+<div class="page-content">
+Your account setup is complete!
+<p><A href="${gotoURL}">Click here to continue on to your requested page</a><br>
+(If asked to login again, just click on the "Login with Shibboleth" link and you'll be logged in immediately)
+</div>
+
+#else
+
+<div class="formBodyNoTop"> 
+
+<div id="intro">
+<p>You have logged into the BCNET Wiki service with this institutional identity for the first time. </p>
+<p>In order to use BCNET's service, your identity must be connected to a new or existing BCNET Wiki account.<br>
+If you already have a BCNET Wiki account, claim it to keep your existing Wiki permissions and content.<br>
+If you do not yet have a Wiki account, one will be created for you now.<br>
+You will only see this page the first time you login with this identity<br>
+</p>
+</div>
+<a class= "noul" href="#">
+<div class="choiceBoxContainer">
+	<div class="choiceBoxContainerRow">
+		<div id="new-choiceBox" class="choiceBox">
+		<p>I haven't used the BCNET Wiki service before and would like to create a new account</p>
+		</div>
+		<div id="claim-choiceBox" class="choiceBox">
+		<p>I've used the Wiki before, or I know the BCNET staff have created an account for me and I know my Wiki ID and Password.</p>
+		</div>
+		<div id="forgot-choiceBox" class="choiceBox">
+		<p>I'm not sure whether I have a Wiki account or I've forgotten the password</p>
+		</div>
+	</div>
+</div>
+</a>
+<form id="newUserForm" name='myForm' action='/crowd/plugins/servlet/claimAccount' method='post'>
+<div id="new-inputBox" class="inputBox">
+	<div class="fieldArea required">
+	<label class="fieldLabelArea">First Name: <span class="required">*</span></label>
+	<div class="fieldValueArea"><input type='text' id='firstname' name='firstname' minlength="1" value='${firstname}' required></div></div>
+	<div class="fieldArea required">
+	<label class="fieldLabelArea">Last Name: <span class="required">*</span></label>
+	<div class="fieldValueArea"><input type='text' minlength="2" id='lastname' name='lastname' value='${lastname}' required></div></div>
+	<div class="fieldArea required">
+	<label class="fieldLabelArea">Email address: <span class="required">*</span></label>
+	<div class="fieldValueArea"><input type='email' id='email' name='email' value='${email}' required></div></div>
+	<div class="fieldArea required">
+	<label class="fieldLabelArea" for="username">BCNET Wiki Username: <span class="required">*</span></label>
+	<div class="fieldValueArea"><input type='text' minlength="3" name='username' id="newUsername" value="" required></div></div>
+	<div class="fieldArea">
+	<label class="fieldLabelArea" for="setPassword" title="You only need to set a password on your Wiki account if you need to login without using your institutional credentials, if you expect to make REST calls to Confluence or Jira, or if you need Administrator access">Set a Password?</label>
+	<div class="fieldValueArea"><input type='checkBox' id="setPassword" name="setPassword" title="You only need to set a password on your Wiki account if you need to login without using your institutional credentials, if you expect to make REST calls to Confluence or Jira, or if you need Administrator access"/></div></div>
+
+	<div class="optionalPassword">
+		<div class="fieldArea required">
+		<label class="fieldLabelArea" for="pw1">Password: <span class="required">*</span></label>
+		<div class="fieldValueArea"><input type='password' name='password' id="password" value=''></div></div>
+		<div class="fieldArea required">
+		<label class="fieldLabelArea">Confirm Password: <span class="required">*</span></label>
+		<div class="fieldValueArea"><input type='password' name='password2' id="password2" value=''></div></div>
+	</div>
+
+	<div class="formFooter wizardFooter"> 
+   		<div class="buttons"> 
+		<button type='submit' onClick="skipCheck=false">Create new account</button>
+		</div>
+   </div> 
+</div> 
+</form>
+
+<form id="claimForm" name='myForm' action='/crowd/plugins/servlet/claimAccount' method='post'>
+
+<div id="claim-inputBox" class="inputBox">
+
+	<div class="fieldArea required">
+	<label class="fieldLabelArea" for="username">BCNET Wiki Username: <span class="required">*</span></label>
+	<div class="fieldValueArea"><input type='text' name='username' id="username" value='${username}'></div></div>
+
+	<div class="fieldArea required">
+	<label class="fieldLabelArea" for="pw1">Password: <span class="required">*</span></label>
+	<div class="fieldValueArea"><input type='password' name='password' id="pw1" value=''></div></div>
+
+	<div class="formFooter wizardFooter"> 
+	   <div class="buttons"> 
+		<button name='reclaim' onClick="skipCheck=true" value="true" type='submit'>Claim account</button>
+	   </div> 
+	</div> 
+</div>
+</form>
+
+<div id="forgot-inputBox" class="inputBox">
+  <div id="forgot">
+    <span>You will be redirected to the BCNET Wiki to retrieve your username or password in.. </span>
+    <span id="countdown">5</span>
+    <span><button class="buttons" onClick="window.location.href=crowdForgotForm" id="goNow">Go Now</button></span>
+  </div>
+</div>
+
+
+
+</div> <!-- formBodyNoTop -->
+
+#end
+
+#else
+Error: You must be logged into your Shibboleth IDP to setup your BCNET Wiki account this way
+#end
+
+</div> <!-- crowdForm -->
+
+</div> <!-- content -->
+
+
+
+<footer>
+	<p>
+	BCNET | Suite 7376 - SFU Harbour Centre 515 West Hastings Street Vancouver, BC V6B 5K3 | Tel: 1-604-822-1348 | Fax 1-604-822-9887 | info@bc.net 
+	</p>
+</footer>
+</div> <!-- container -->
+</body>
+</html>
